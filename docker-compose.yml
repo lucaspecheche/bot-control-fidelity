@@ -1,0 +1,32 @@
+version: "3.6"
+services:
+  # Web service layer
+  nginx:
+    image: nginx:1.13
+    container_name: nginx-container
+    volumes:
+      - ./:/app
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "8080:80"
+    depends_on:
+      - php
+
+  # Application service layer
+  php:
+    build:
+      context: docker/php
+    container_name: php-container
+    network_mode: host
+    ports:
+      - "8081:9000"
+
+  # Data persistence service layer host.docker.internal
+  mysql:
+    image: mysql:5.7
+    container_name: mysql-container
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: "container"
