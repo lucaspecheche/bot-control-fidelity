@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
-use Illuminate\Support\Facades\DB;
+use Telegram\Bot\Laravel\Facades\Telegram;
 
 class HomeController extends Controller
 {
@@ -22,8 +21,9 @@ class HomeController extends Controller
         phpinfo();
     }
 
-    public function consulta()
+    public function me()
     {
-        return DB::table('table')->get();
+        $response = Telegram::getMe();
+        dd($response);
     }
 }
