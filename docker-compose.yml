@@ -17,5 +17,7 @@ services:
     build:
       context: docker/php
     container_name: php-container
+    volumes:
+      - ./:app:cached
     ports:
       - "9000:9000"
