@@ -14,5 +14,4 @@ class Telegram extends Api
             'message_id' => $message_id
         ])->getDecodedBody();
     }
-
 }

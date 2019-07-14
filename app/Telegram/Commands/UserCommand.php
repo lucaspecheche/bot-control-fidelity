@@ -2,17 +2,17 @@
 
 namespace App\Telegram\Commands;
 
-use App\Telegram\Dialogs\UserManagementDialog;
+use App\Telegram\Dialogs\UserDialog;
 use BotDialogs\Laravel\Facades\Dialogs;
 use Telegram\Bot\Commands\Command;
 
-class UserManagementCommand extends Command
+class UserCommand extends Command
 {
-    protected $name = 'users';
+    protected $name = 'user';
     protected $description = 'Gestão de Usuários';
 
     public function handle($arguments)
     {
-        Dialogs::add(new UserManagementDialog($this->update));
+        Dialogs::add(new UserDialog($this->update));
     }
 }

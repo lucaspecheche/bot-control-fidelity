@@ -17,15 +17,25 @@ class User extends Authenticatable
         'password', 'remember_token', 'created_at', 'updated_at', 'deleted_at'
     ];
 
-    public function findOrNew(array $attributes): User
+    public function findOrNew(array $attributes)
     {
-        $user = $this->newQuery()->firstOrCreate($attributes)->first();
+        $user = $this->newQuery()->firstOrCreate($attributes);
         return $user;
     }
 
     public function chats()
     {
         return $this->hasMany(Chat::class, 'user_id','');
+    }
+
+    public function fidelities()
+    {
+        return $this->hasMany(Fidelity::class, 'user_id', '');
+    }
+
+    public function findByThirdPartyId($id)
+    {
+        return $this->newQuery()->where('id_third_party', $id)->first();
     }
 }
 
