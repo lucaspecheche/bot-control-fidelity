@@ -36,15 +36,17 @@ class FidelityDialogService
         if($user->fidelities->isEmpty())
             return "Você não possui nenhuma fidadelidade cadastrada.";
 
+        $fidelity = $user->fidelities->first();
+
         $message = "Fidelidades Ativas:\n";
 
-        foreach ($user->fidelities as $fidelity ) {
+        //foreach ($user->fidelities as $fidelity ) {
             $message .= "\n- Plano: " . $fidelity->label;
             $message .= "\n- Início: " . Carbon::parse($fidelity->startAt)->toDateString();
             $message .= "\n- Quantidade: " . $fidelity->amount;
             $message .= "\n- Restantes: " . $fidelity->remainder;
             $message .= "\n";
-        }
+        //}
 
         return $message;
     }

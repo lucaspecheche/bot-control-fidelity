@@ -48,11 +48,6 @@ class Dialog extends DialogBot
         $telegram->deleteMessage($chatId, $message);
     }
 
-    public function getId()
-    {
-        return $this->id;
-    }
-
     public function isToExit()
     {
         if($this->optionSelected() == self::EXIT) {
