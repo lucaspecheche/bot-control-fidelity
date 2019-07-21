@@ -1,7 +1,6 @@
 <?php
 
-
-namespace App\Telegram;
+namespace Telegram;
 
 use Telegram\Bot\Api;
 
@@ -13,5 +12,13 @@ class Telegram extends Api
             'chat_id' => $chatId,
             'message_id' => $message_id
         ])->getDecodedBody();
+    }
+
+    public function chatId()
+    {
+        return $this->getWebhookUpdates()
+            ->getMessage()
+            ->getChat()
+            ->getId();
     }
 }

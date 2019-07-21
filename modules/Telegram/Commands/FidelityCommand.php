@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Telegram\Commands;
+namespace Telegram\Commands;
 
-use App\Telegram\Dialogs\FidelityDialog;
-use BotDialogs\Laravel\Facades\Dialogs;
+use Telegram\Dialogs\Fidelities\FidelityDialog;
+use Telegram\Facades\Dialogs;
 use Telegram\Bot\Commands\Command;
 
 class FidelityCommand extends Command

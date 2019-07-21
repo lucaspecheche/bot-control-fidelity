@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Telegram\Commands;
+namespace Telegram\Commands;
 
-use App\Telegram\Dialogs\UserDialog;
-use BotDialogs\Laravel\Facades\Dialogs;
+use Telegram\Dialogs\UserDialog;
 use Telegram\Bot\Commands\Command;
+use Telegram\Facades\Dialogs;
 
 class UserCommand extends Command
 {

@@ -1,22 +1,21 @@
 <?php
 
-namespace App\Telegram\Dialogs;
+namespace Telegram\Dialogs\Fidelities;
 
 use App\Facades\FidelityDialogService;
-use App\Helpers\DateHelper;
-use Carbon\Carbon;
+use Telegram\Dialog;
+use Telegram\Dialogs\Traits\UtilsDialog;
 
 class FidelityDialog extends Dialog
 {
+    use UtilsDialog;
+
     protected $id    = 'FidelityDialog';
     public $steps = [
         'options',
         'select',
-        'create',
-        'createStartAt',
-        'createAmount',
         'available',
-        'checkout',
+        'checkout'
     ];
 
     const CREATE    = 'Nova Fidelidade';
@@ -30,8 +29,8 @@ class FidelityDialog extends Dialog
             [self::AVAILABLE],
         ];
 
-        $message = $this->sendMarkup($keyboard);
-        $this->remember($message->getMessageId());
+        $messageId = $this->sendMarkup($keyboard)->getMessageId();
+        $this->remember($messageId);
     }
 
     public function select()
@@ -41,7 +40,7 @@ class FidelityDialog extends Dialog
 
         switch ($this->optionSelected()) {
             case self::CREATE:
-                $this->jump('create');
+                $this->goDialog(new CreateFidelitiesTelegram($this->update));
                 break;
             case self::AVAILABLE:
                 $this->jump('available');
@@ -53,46 +52,6 @@ class FidelityDialog extends Dialog
         $this->proceed();
     }
 
-    public function create()
-    {
-        if($this->isToExit()){
-            return "Exit";
-        }
-
-        $string = "Informe a data inicial da Fidelidade (Carbon Resolve para vc)";
-
-        $this->sendText($string);
-        $this->jump('createStartAt');
-    }
-
-    public function createStartAt()
-    {
-        $date = $this->update->getMessage()->getText();
-
-        if(DateHelper::validate($date)) {
-            $dateFormatted = Carbon::parse($date)->toDateString();
-            $this->remember($dateFormatted);
-
-            $string = "Ok! Entendemos que a data inicial será: ${dateFormatted}.\nAgora nos informe a quantidade contratada.";
-            $this->sendText($string);
-            $this->jump('createAmount');
-        } else {
-            $this->sendText('Data Incorreta!');
-            $this->jump('create');
-            $this->proceed();
-        }
-    }
-
-    public function createAmount()
-    {
-        $amount = $this->update->getMessage()->getText();
-        $user   = $this->update->getMessage()->getFrom();
-        $date   = $this->remember();
-
-        $this->sendText(FidelityDialogService::create($date, $amount, $user));
-        $this->sendText(FidelityDialogService::available($user));
-        $this->end();
-    }
 
     public function available()
     {

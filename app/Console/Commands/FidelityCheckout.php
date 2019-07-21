@@ -3,31 +3,32 @@
 namespace App\Console\Commands;
 
 use App\Models\Fidelity;
-use App\Telegram\Dialogs\Dialogs;
-use App\Telegram\Dialogs\FidelityDialog;
+use Telegram\Dialogs;
+use Telegram\Dialogs\Fidelities\FidelityDialog;
 use Illuminate\Console\Command;
+use Telegram\Telegram;
 
 class FidelityCheckout extends Command
 {
     protected $signature   = 'fidelity:checkout';
     protected $description = 'Confirma o pedido diariamente';
 
-    public function handle(Dialogs $dialogs)
+    public function handle(Dialogs $dialogs, Telegram $telegram)
     {
        $fidelities = Fidelity::query()->where('startAt','<=', now())->get();
 
        foreach ($fidelities as $fidelity) {
-           $user = $fidelity->user;
+           $user   = $fidelity->user;
            $chatId = $user->chats->first()->chat;
 
-           $dialogs->schedule($chatId, 6, FidelityDialog::class);
-           $this->sendCheckout($dialogs->telegram, $chatId);
+           $dialogs->schedule($chatId, 3, FidelityDialog::class);
+           $this->sendCheckout($telegram, $chatId);
        }
 
        $this->info('Process Complete');
     }
 
-    private function sendCheckout($telegram, $chatId)
+    private function sendCheckout(Telegram $telegram, int $chatId)
     {
         $keyboard = [
             ['Sim'],

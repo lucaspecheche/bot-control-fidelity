@@ -1,15 +1,20 @@
 <?php
 
-namespace App\Telegram\Dialogs;
+namespace Telegram\Dialogs\Traits;
 
-use App\Telegram\Telegram;
-use BotDialogs\Dialog as DialogBot;
+use Telegram\Bot\Objects\Message;
 
-class Dialog extends DialogBot
+trait UtilsDialog
 {
-    const EXIT = 'sair';
+    public function deleteMessage($messageId = null)
+    {
+        $chatId    = $this->getChat()->getId();
+        $message = $messageId ?? $this->update->getMessage()->getMessageId();
 
-    public function sendMarkup($keyboard)
+        $this->telegram->deleteMessage($chatId, $message);
+    }
+
+    public function sendMarkup($keyboard): Message
     {
         $reply_markup = $this->telegram->replyKeyboardMarkup([
             'keyboard' => $keyboard,
@@ -38,19 +43,14 @@ class Dialog extends DialogBot
         return $this->update->getMessage()->getText();
     }
 
-    public function deleteMessage($messageId = null)
+    public function getText(): string
     {
-        $telegram  = resolve(Telegram::class);
-        $chatId    = $this->getChat()->getId();
-
-        $message = $messageId ?? $this->update->getMessage()->getMessageId();
-
-        $telegram->deleteMessage($chatId, $message);
+        return $this->update->getMessage()->getText();
     }
 
     public function isToExit()
     {
-        if($this->optionSelected() == self::EXIT) {
+        if($this->optionSelected() == 'sair') {
             $this->end();
             return true;
         }

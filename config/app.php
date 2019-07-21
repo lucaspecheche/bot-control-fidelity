@@ -165,8 +165,8 @@ return [
         /*
          * Package Service Providers...
          */
-        Telegram\Bot\Laravel\TelegramServiceProvider::class,
-        BotDialogs\Laravel\DialogsServiceProvider::class,
+        Telegram\Providers\DialogsServiceProvider::class,
+        Telegram\Providers\TelegramServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -175,6 +175,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Sentry\Laravel\ServiceProvider::class,
 
     ],
 
@@ -226,8 +227,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Telegram'  => Telegram\Bot\Laravel\Facades\Telegram::class,
-        'Dialogs' => BotDialogs\Laravel\Facades\Dialogs::class,
+        'Sentry' => Sentry\Laravel\Facade::class,
 
     ],
 

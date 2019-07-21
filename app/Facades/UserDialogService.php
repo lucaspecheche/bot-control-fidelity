@@ -15,6 +15,6 @@ class UserDialogService extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return resolve(DialogService::class);
+        return DialogService::class;
     }
 }
