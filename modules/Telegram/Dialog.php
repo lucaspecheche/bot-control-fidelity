@@ -339,6 +339,7 @@ class Dialog
 
     public function goDialog(Dialog $dialog)
     {
+        $this->end();
         $this->linked = true;
         Dialogs::jump($dialog);
     }
