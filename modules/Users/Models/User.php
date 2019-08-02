@@ -2,6 +2,8 @@
 
 namespace Users\Models;
 
+use App\Models\Chat;
+use Fidelities\Models\Fidelity;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 

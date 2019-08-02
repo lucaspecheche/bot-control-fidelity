@@ -4,6 +4,7 @@ namespace Fidelities\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Users\Models\User;
 
 class Fidelity extends Model
 {
