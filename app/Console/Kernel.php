@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command(FidelityCheckout::class)->weekdays()->at('14:40');
+        $schedule->command(FidelityCheckout::class)->weekdays()->at('14:50');
     }
 
     /**
