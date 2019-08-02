@@ -57,7 +57,7 @@ return [
     */
     'commands' => [
         Telegram\Bot\Commands\HelpCommand::class,
-        Telegram\Commands\UserCommand::class,
-        Telegram\Commands\FidelityCommand::class,
+        Users\Telegram\Commands\UserCommand::class,
+        Fidelities\Telegram\Commands\FidelityCommand::class,
     ],
 ];

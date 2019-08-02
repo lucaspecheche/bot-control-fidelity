@@ -1,16 +1,23 @@
 <?php
 
-namespace Telegram\Dialogs\Fidelities;
+namespace Fidelities\Telegram\Dialogs;
 
-use App\Facades\FidelityDialogService;
+use Telegram\Bot\Objects\Update;
 use Telegram\Dialog;
-use Telegram\Dialogs\Traits\UtilsDialog;
+use Telegram\Traits\UtilsDialog;
 
 class FidelityDialog extends Dialog
 {
     use UtilsDialog;
 
-    protected $id    = 'FidelityDialog';
+    protected $service;
+
+    public function __construct(FidelityDialogService $service, Update $update)
+    {
+        $this->service = $service;
+        parent::__construct($update);
+    }
+
     public $steps = [
         'options',
         'select',
@@ -69,7 +76,7 @@ class FidelityDialog extends Dialog
         $last   = false;
 
         if($option == "Sim") {
-            $last = FidelityDialogService::checkout($user);
+            $last = $this->service->checkout($user);
             $this->sendText('Ok! Confirmamos que você realizou pedidos hoje.');
         }else {
             $this->sendText('Ok! Confirmamos que você NÃO realizou pedidos hoje.');

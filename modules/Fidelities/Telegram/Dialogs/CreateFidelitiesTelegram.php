@@ -1,12 +1,12 @@
 <?php
 
-namespace Telegram\Dialogs\Fidelities;
+namespace Fidelities\Telegram\Dialogs;
 
 use App\Facades\FidelityDialogService;
 use App\Helpers\DateHelper;
 use Carbon\Carbon;
 use Telegram\Dialog;
-use Telegram\Dialogs\Traits\UtilsDialog;
+use Telegram\Traits\UtilsDialog;
 
 class CreateFidelitiesTelegram extends Dialog
 {

@@ -167,6 +167,7 @@ return [
          */
         Telegram\Providers\DialogsServiceProvider::class,
         Telegram\Providers\TelegramServiceProvider::class,
+        Fidelities\Providers\FidelitiesServiceProvider::class,
         /*
          * Application Service Providers...
          */

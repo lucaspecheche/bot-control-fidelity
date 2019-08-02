@@ -1,8 +1,8 @@
 <?php
 
-namespace Telegram\Commands;
+namespace Fidelities\Telegram\Commands;
 
-use Telegram\Dialogs\Fidelities\FidelityDialog;
+use Fidelities\Telegram\Dialogs\FidelityDialog;
 use Telegram\Facades\Dialogs;
 use Telegram\Bot\Commands\Command;
 
@@ -13,6 +13,6 @@ class FidelityCommand extends Command
 
     public function handle($arguments)
     {
-        Dialogs::add(new FidelityDialog($this->update));
+        Dialogs::add(resolve(FidelityDialog::class));
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace Telegram\Commands;
+namespace Users\Telegram\Commands;
 
-use Telegram\Dialogs\UserDialog;
 use Telegram\Bot\Commands\Command;
 use Telegram\Facades\Dialogs;
+use Users\Telegram\Dialogs\UserDialog;
 
 class UserCommand extends Command
 {
@@ -13,6 +13,6 @@ class UserCommand extends Command
 
     public function handle($arguments)
     {
-        Dialogs::add(new UserDialog($this->update));
+        Dialogs::add(resolve(UserDialog::class));
     }
 }

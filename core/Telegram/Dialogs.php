@@ -36,12 +36,12 @@ class Dialogs
             return false;
         }
 
-        $next = $redis->hget($chatId, 'next');
-        $name = $redis->hget($chatId, 'dialog');
+        $next   = $redis->hget($chatId, 'next');
+        $name   = $redis->hget($chatId, 'dialog');
         $memory = $redis->hget($chatId, 'memory');
 
         /** @var Dialog $dialog */
-        $dialog = new $name($update); // @todo look at the todo above about code safety
+        $dialog = resolve($name); // @todo look at the todo above about code safety
         $dialog->setTelegram($this->telegram);
         $dialog->setNext($next);
         $dialog->setMemory($memory);
@@ -103,5 +103,11 @@ class Dialogs
         $this->redis->del($chatId);
         $this->add($newDialog);
         $this->proceed($update);
+    }
+
+    public function start(Update $update)
+    {
+        if($this->exists($update))
+            $this->proceed($update);
     }
 }

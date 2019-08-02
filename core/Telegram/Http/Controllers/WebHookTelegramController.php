@@ -3,6 +3,7 @@
 namespace Telegram\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Telegram\Bot\Objects\Update;
 use Telegram\Dialogs;
 use Illuminate\Http\Request;
 use Telegram\Telegram;
@@ -20,10 +21,15 @@ class WebHookTelegramController extends Controller
 
     public function getUpdates()
     {
-        $update = $this->telegram->commandsHandler(true);
+        $update = $this->telegram->getWebhookUpdates();
+        app()->singleton(Update::class, function ($app) use ($update) {
+            return $update;
+        });
 
-        if($this->dialogs->exists($update))
-            $this->dialogs->proceed($update);
+        $this->telegram->commandsHandler(true);
+        $this->dialogs->start($update);
+
+
 
 //        try {
 //
@@ -44,7 +50,7 @@ class WebHookTelegramController extends Controller
 
     public function setWebhook(Request $request)
     {
-        $url = $request->get('url', url('/'));
+        $url = $request->get('url', url('/telegram/updates'));
         return $this->telegram->setWebhook(['url' => $url]);
     }
 

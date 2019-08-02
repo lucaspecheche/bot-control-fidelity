@@ -1,6 +1,6 @@
 <?php
 
-namespace Telegram\Dialogs\Fidelities;
+namespace Fidelities\Telegram\Dialogs;
 
 use Telegram\Dialog;
 

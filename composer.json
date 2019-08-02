@@ -37,7 +37,9 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
-            "Telegram\\": "modules/Telegram"
+            "Telegram\\": "core/Telegram",
+            "Fidelities\\": "modules/Fidelities",
+            "Users\\": "modules/Users"
         },
         "classmap": [
             "database/seeds",

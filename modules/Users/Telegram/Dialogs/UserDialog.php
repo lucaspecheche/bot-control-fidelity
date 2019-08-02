@@ -1,17 +1,25 @@
 <?php
 
-namespace Telegram\Dialogs;
+namespace Users\Telegram\Dialogs;
 
-use App\Facades\UserDialogService;
+use Telegram\Bot\Objects\Update;
 use Telegram\Dialog;
-use Telegram\Dialogs\Fidelities\CreateFidelitiesTelegram;
-use Telegram\Dialogs\Traits\UtilsDialog;
+use Telegram\Traits\UtilsDialog;
 
 class UserDialog extends Dialog
 {
     use UtilsDialog;
 
     protected $steps = ['options', 'response'];
+    protected $service;
+
+
+    public function __construct(Update $update, UserDialogService $service)
+    {
+        $this->service = $service;
+        parent::__construct($update);
+    }
+
 
     const CREATE  = 'Criar Usuário';
     const LISTING = 'Listar Usuários';
@@ -32,11 +40,8 @@ class UserDialog extends Dialog
 
         switch ($this->optionSelected()) {
             case self::ADD_ME:
-                $response = UserDialogService::createAndChat($this->update);
+                $response = $this->service->createAndChat($this->update);
                 break;
-            case self::LISTING:
-                $this->goDialog(new CreateFidelitiesTelegram($this->update));
-                return;
         }
 
         $this->telegram->sendMessage([

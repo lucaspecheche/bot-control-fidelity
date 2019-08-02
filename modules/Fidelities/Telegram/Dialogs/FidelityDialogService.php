@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services;
+namespace Fidelities\Telegram\Dialogs;
 
-use App\Models\Fidelity;
-use App\Models\User;
 use Carbon\Carbon;
+use Fidelities\Models\Fidelity;
 use Telegram\Bot\Objects\User as UserTelegram;
+use Users\Models\User;
 
 class FidelityDialogService
 {

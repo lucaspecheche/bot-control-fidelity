@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services;
+namespace Users\Telegram\Dialogs;
 
 use App\Models\Chat;
-use App\Models\User;
 use Telegram\Bot\Objects\Update;
+use Users\Models\User;
 
 class UserDialogService
 {

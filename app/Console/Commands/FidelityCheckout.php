@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Fidelity;
+use Fidelities\Models\Fidelity;
+use Fidelities\Telegram\Dialogs\FidelityDialog;
 use Telegram\Dialogs;
-use Telegram\Dialogs\Fidelities\FidelityDialog;
 use Illuminate\Console\Command;
 use Telegram\Telegram;
 
