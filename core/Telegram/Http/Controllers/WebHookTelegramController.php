@@ -3,13 +3,14 @@
 namespace Telegram\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Telegram\Bot\Objects\Update;
 use Telegram\Dialogs;
 use Illuminate\Http\Request;
 use Telegram\Telegram;
 
 class WebHookTelegramController extends Controller
 {
+    const ROUTE = '/telegram/updates';
+
     private $dialogs;
     private $telegram;
 
@@ -21,36 +22,17 @@ class WebHookTelegramController extends Controller
 
     public function getUpdates()
     {
-        $update = $this->telegram->getWebhookUpdates();
-        app()->singleton(Update::class, function ($app) use ($update) {
-            return $update;
-        });
+        try {
+            $this->dialogs->start();
+        } catch (\Exception $exception) {
+           echo 'ocorreu um erro';
+        }
 
-        $this->telegram->commandsHandler(true);
-        $this->dialogs->start($update);
-
-
-
-//        try {
-//
-//        } catch (\Exception $exception) {
-//            $update = $this->telegram->getWebhookUpdates();
-//            $update->getMessage()->getChat()->getId();
-//
-//            $from = $update->getMessage()->toArray();
-//            \Illuminate\Support\Facades\Log::debug('Debug: ', $from);
-//
-//
-//            $this->telegram->sendMessage([
-//                'chat_id' => $update->getMessage()->getChat()->getId(),
-//                'text'    => 'Ocorreu um erro Interno ao processar o comando.'
-//            ]);
-//        }
     }
 
     public function setWebhook(Request $request)
     {
-        $url = $request->get('url', url('/telegram/updates'));
+        $url = $request->get('url').self::ROUTE;
         return $this->telegram->setWebhook(['url' => $url]);
     }
 

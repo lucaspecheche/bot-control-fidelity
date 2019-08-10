@@ -30,11 +30,13 @@ class FidelityDialogService
     {
         $user = (new User())->findByThirdPartyId($userTelegram->getId());
 
-        if(is_null($user))
+        if(empty($user)) {
             return "Usuário não encontrado.\nEntre com /user para se cadastrar";
+        }
 
-        if($user->fidelities->isEmpty())
-            return "Você não possui nenhuma fidadelidade cadastrada.";
+        if($user->fidelities->isEmpty()) {
+            return 'Você não possui nenhuma fidadelidade cadastrada.';
+        }
 
         $fidelity = $user->fidelities->first();
 

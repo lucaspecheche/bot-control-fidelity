@@ -51,7 +51,7 @@ class Dialogs
 
     public function proceed(Update $update)
     {
-        $dialog = self::get($update);
+        $dialog = $this->get($update);
 
         if (!$dialog) {
             return;
@@ -105,9 +105,15 @@ class Dialogs
         $this->proceed($update);
     }
 
-    public function start(Update $update)
+    public function start()
     {
-        if($this->exists($update))
+        $update = $this->telegram->getWebhookUpdates();
+        app()->instance(Update::class, $update);
+
+        $this->telegram->commandsHandler(true);
+
+        if($this->exists($update)) {
             $this->proceed($update);
+        }
     }
 }

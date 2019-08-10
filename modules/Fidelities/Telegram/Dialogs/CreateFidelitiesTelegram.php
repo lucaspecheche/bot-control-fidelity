@@ -2,9 +2,9 @@
 
 namespace Fidelities\Telegram\Dialogs;
 
-use App\Facades\FidelityDialogService;
 use App\Helpers\DateHelper;
 use Carbon\Carbon;
+use Telegram\Bot\Objects\Update;
 use Telegram\Dialog;
 use Telegram\Traits\UtilsDialog;
 
@@ -12,11 +12,18 @@ class CreateFidelitiesTelegram extends Dialog
 {
     use UtilsDialog;
 
+    protected $service;
     protected $steps = [
         'info',
         'startAt',
         'amount'
     ];
+
+    public function __construct(FidelityDialogService $service, Update $update)
+    {
+        $this->service = $service;
+        parent::__construct($update);
+    }
 
     public function info()
     {
@@ -49,8 +56,8 @@ class CreateFidelitiesTelegram extends Dialog
         $date   = $this->remember();
 
         if(is_numeric($amount)) {
-            $this->sendText(FidelityDialogService::create($date, $amount, $user));
-            $this->sendText(FidelityDialogService::available($user));
+            $this->sendText($this->service->create($date, $amount, $user));
+            $this->sendText($this->service->available($user));
             $this->end();
         } else {
             $this->sendText('Quantidade informada Incorreta!');

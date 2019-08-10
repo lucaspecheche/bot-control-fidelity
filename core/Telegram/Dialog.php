@@ -337,11 +337,11 @@ class Dialog
         }
     }
 
-    public function goDialog(Dialog $dialog)
+    public function goDialog(string $dialog)
     {
         $this->end();
         $this->linked = true;
-        Dialogs::jump($dialog);
+        Dialogs::jump(resolve($dialog));
     }
 
     protected function toQuit()

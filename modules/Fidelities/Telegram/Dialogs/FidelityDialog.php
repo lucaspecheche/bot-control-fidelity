@@ -47,7 +47,7 @@ class FidelityDialog extends Dialog
 
         switch ($this->optionSelected()) {
             case self::CREATE:
-                $this->goDialog(new CreateFidelitiesTelegram($this->update));
+                $this->goDialog(CreateFidelitiesTelegram::class);
                 break;
             case self::AVAILABLE:
                 $this->jump('available');
@@ -63,7 +63,7 @@ class FidelityDialog extends Dialog
     public function available()
     {
         $user     = $this->update->getMessage()->getFrom();
-        $response = FidelityDialogService::available($user);
+        $response = $this->service->available($user);
 
         $this->sendText($response);
         $this->end();
@@ -85,7 +85,7 @@ class FidelityDialog extends Dialog
         if($last) {
             $this->sendText("Hoje foi seu último dia de fidelidade.");
         } else {
-            $this->sendText(FidelityDialogService::available($user));
+            $this->sendText($this->service->available($user));
         }
 
         $this->end();
